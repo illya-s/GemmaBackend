@@ -228,7 +228,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "logs/default.log" if DEBUG else "/var/log/django/auoe.log",
+            "filename": "logs/default.log",
             "formatter": "default",
         },
     },

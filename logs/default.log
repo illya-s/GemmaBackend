@@ -699,3 +699,20 @@ django.db.utils.OperationalError: no such column: shop_product.updated_at
 [2025-12-11 13:13:49,903] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
 [2025-12-11 13:13:49,903] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
 [2025-12-11 13:13:49,904] INFO daphne.server - Listening on TCP address 127.0.0.1:8000
+[2025-12-11 13:37:51,700] INFO django.utils.autoreload - Watching for file changes with StatReloader
+[2025-12-11 13:37:52,230] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2025-12-11 13:37:52,230] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+[2025-12-11 13:37:52,230] INFO daphne.server - Listening on TCP address 127.0.0.1:8000
+[2025-12-11 13:40:46,928] INFO django.utils.autoreload - Watching for file changes with StatReloader
+[2025-12-11 13:40:47,046] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2025-12-11 13:40:47,046] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+[2025-12-11 13:40:47,047] INFO daphne.server - Listening on TCP address 127.0.0.1:8000
+[2025-12-11 13:41:13,204] INFO django.utils.autoreload - Watching for file changes with StatReloader
+[2025-12-11 13:41:13,350] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2025-12-11 13:41:13,350] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+[2025-12-11 13:41:13,351] INFO daphne.server - Listening on TCP address 127.0.0.1:8000
+[2025-12-11 13:41:23,819] INFO django.utils.autoreload - /home/ilya/Programming/PG/backend/gemma/settings.py changed, reloading.
+[2025-12-11 13:41:24,783] INFO django.utils.autoreload - Watching for file changes with StatReloader
+[2025-12-11 13:41:24,935] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2025-12-11 13:41:24,935] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+[2025-12-11 13:41:24,936] INFO daphne.server - Listening on TCP address 127.0.0.1:8000

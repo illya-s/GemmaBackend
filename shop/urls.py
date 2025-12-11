@@ -7,6 +7,7 @@ from . import views
 
 
 urlpatterns = [
+    path('home/', views.HomeView.as_view()),
     path('products/', views.ProductsView.as_view()),
     path('ingredients/', views.IngredientsView.as_view())
 ]

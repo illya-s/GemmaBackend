@@ -43,3 +43,9 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
+
+
+
+class HomeResponseSerializer(serializers.Serializer):
+    products = ProductSerializer(many=True)
+    ingredients = IngredientSerializer(many=True)

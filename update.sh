@@ -34,7 +34,7 @@ log "📦 Сборка статических файлов..."
 run_or_fail "Collectstatic Django" uv run manage.py collectstatic --noinput
 
 log "🔁 Перезапуск сервисов..."
-run_or_fail "Перезапуск gunicorn" sudo systemctl restart gunicorn
+run_or_fail "Перезапуск gunicorn" sudo systemctl restart gunicorn_gemma
 # run_or_fail "Перезапуск celery hard" sudo systemctl restart hard
 # run_or_fail "Перезапуск celery fast" sudo systemctl restart fast
 # run_or_fail "Перезапуск celery-beat" sudo systemctl restart celery-beat

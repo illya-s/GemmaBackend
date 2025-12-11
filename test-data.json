@@ -1,0 +1,89 @@
+{
+    "ingredients": [
+        {
+            "name": "Bordo del formaggio",
+            "price": 2,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Bordo_del_formaggio.webp"
+        },
+        {
+            "name": "Mocarella cremosa",
+            "price": 1.5,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Mozzarella_cremosa.webp"
+        },
+        {
+            "name": "Formaggi Cheddar e Parmigiano",
+            "price": 2.4,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Formaggi_Cheddar_e_Parmigiano.webp"
+        },
+        {
+            "name": "Peperoncino jalapeño piccante",
+            "price": 1,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Peper_piccante.webp"
+        },
+        {
+            "name": "Pollo tenero",
+            "price": 2.9,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Pollo_tenero.webp"
+        },
+        {
+            "name": "Funghi prataioli",
+            "price": 2,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Funghi_prataioli.webp"
+        },
+        {
+            "name": "Prosciutto",
+            "price": 2.2,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Prosciutto.webp"
+        },
+        {
+            "name": "Pepperoni piccante",
+            "price": 3.1,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Pepperoni_piccante.webp"
+        },
+        {
+            "name": "Chorizo ​​piccante",
+            "price": 3.2,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Chorizo_piccante.webp"
+        },
+        {
+            "name": "Cetrioli sottaceto",
+            "price": 1.3,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Cetrioli_sottaceto.webp"
+        },
+        {
+            "name": "Pomodori freschi",
+            "price": 1.4,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Pomodori_freschi.webp"
+        },
+        {
+            "name": "Cipolla rossa",
+            "price": 1.5,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Cipolla_rossa.webp"
+        },
+        {
+            "name": "Ananas succosi",
+            "price": 1.6,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Ananas_succosi-1.webp"
+        },
+        {
+            "name": "Erbe italiane",
+            "price": 1.7,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Erbe_italiane.webp"
+        },
+        {
+            "name": "Peperone dolce",
+            "price": 1.8,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Peperone_dolce.webp"
+        },
+        {
+            "name": "Cubetti di formaggio feta",
+            "price": 1.9,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Cubetti_di_formaggio_feta.webp"
+        },
+        {
+            "name": "Polpette",
+            "price": 2,
+            "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Polpette.webp"
+        }
+    ]
+}

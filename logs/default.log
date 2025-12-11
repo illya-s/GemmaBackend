@@ -695,3 +695,7 @@ django.db.utils.OperationalError: no such column: shop_product.updated_at
 [2025-12-09 13:22:30,749] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
 [2025-12-09 13:22:30,749] INFO daphne.server - Listening on TCP address 127.0.0.1:8000
 [2025-12-09 13:22:30,889] INFO django.channels.server - [mHTTP GET /api/ingredients/ 200 [0.05, 127.0.0.1:36790][0m
+[2025-12-11 13:13:49,709] INFO django.utils.autoreload - Watching for file changes with StatReloader
+[2025-12-11 13:13:49,903] INFO daphne.server - HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2025-12-11 13:13:49,903] INFO daphne.server - Configuring endpoint tcp:port=8000:interface=127.0.0.1
+[2025-12-11 13:13:49,904] INFO daphne.server - Listening on TCP address 127.0.0.1:8000

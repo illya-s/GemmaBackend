@@ -8,13 +8,28 @@ print(os.environ.get("DJANGO_SETTINGS_MODULE"))
 django.setup()
 
 
+from urllib.parse import urlparse
+
+import requests
+from django.core.files.base import ContentFile
 from tqdm import tqdm
 
 from shop.models import Category, DoughType, Ingredient, Product, ProductSize
 
-fp = "test-data.json"
 
-with open(fp, encoding="utf8") as file:
+def download_image(url: str):
+    if not url:
+        return None
+
+    response = requests.get(url)
+    response.raise_for_status()
+
+    filename = "testImage.jpg"
+
+    return filename, ContentFile(response.content)
+
+
+with open("test-data.json", encoding="utf8") as file:
     data = json.load(file)
 
 for ingredient_data in tqdm(
@@ -26,12 +41,12 @@ for ingredient_data in tqdm(
 ):
     ingredient, created = Ingredient.objects.update_or_create(
         name=ingredient_data["name"],
-        defaults={
-            "price": ingredient_data["price"],
-            "image": ingredient_data["imageUrl"],
-        },
+        defaults={"price": ingredient_data["price"]},
     )
-    print(created, ingredient.name)
+    if ingredient_data["imageUrl"]:
+        filename, content = download_image(ingredient_data["imageUrl"])
+        ingredient.image.save(filename, content, save=True)
+
 
 for product_size_data in tqdm(
     data["product_sizes"],
@@ -81,8 +96,9 @@ for category_data in tqdm(
     ):
         product, created = Product.objects.update_or_create(
             name=product_data["name"],
-            defaults={
-                "image": product_data["imageUrl"],
-                "category": category,
-            },
+            defaults={"category": category},
         )
+
+        if product_data["imageUrl"]:
+            filename, content = download_image(product_data["imageUrl"])
+            product.image.save(filename, content, save=True)

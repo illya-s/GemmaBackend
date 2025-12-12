@@ -4,6 +4,12 @@ from .models import Cart, Category, DoughType, Ingredient, Product, ProductSize
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj):
+        request = self.context.get("request")
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
+
     class Meta:
         model = Product
         fields = "__all__"
@@ -20,6 +26,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj):
+        request = self.context.get("request")
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
+
     class Meta:
         model = Ingredient
         fields = "__all__"

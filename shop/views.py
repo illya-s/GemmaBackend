@@ -6,7 +6,12 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.views import APIView
 
 from .models import Category, Ingredient, Product
-from .serializers import CategorySerializer, HomeResponseSerializer, IngredientSerializer, ProductSerializer
+from .serializers import (
+    CategorySerializer,
+    HomeResponseSerializer,
+    IngredientSerializer,
+    ProductSerializer,
+)
 
 
 class HomeView(APIView):
@@ -14,9 +19,11 @@ class HomeView(APIView):
 
     @extend_schema(responses=HomeResponseSerializer)
     def get(self, request: Request) -> Response:
-        category_serializer = CategorySerializer(Category.objects.all(), many=True)
+        category_serializer = CategorySerializer(
+            Category.objects.all(), many=True, context={"request": request}
+        )
         ingredients_serializer = IngredientSerializer(
-            Ingredient.objects.all(), many=True
+            Ingredient.objects.all(), many=True, context={"request": request}
         )
 
         return Response(
@@ -33,7 +40,9 @@ class ProductsView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request: Request) -> Response:
-        serializer = self.serializer_class(Product.objects.all(), many=True)
+        serializer = self.serializer_class(
+            Product.objects.all(), many=True, context={"request": request}
+        )
         return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request: Request) -> Response:
@@ -48,5 +57,7 @@ class IngredientsView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request: Request) -> Response:
-        serializer = self.serializer_class(Ingredient.objects.all(), many=True)
+        serializer = self.serializer_class(
+            Ingredient.objects.all(), many=True, context={"request": request}
+        )
         return Response(serializer.data, status=HTTP_200_OK)

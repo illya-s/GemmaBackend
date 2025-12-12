@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 from rest_framework.views import APIView
 
-from .models import Ingredient, Product
-from .serializers import HomeResponseSerializer, IngredientSerializer, ProductSerializer
+from .models import Category, Ingredient, Product
+from .serializers import CategorySerializer, HomeResponseSerializer, IngredientSerializer, ProductSerializer
 
 
 class HomeView(APIView):
@@ -14,14 +14,14 @@ class HomeView(APIView):
 
     @extend_schema(responses=HomeResponseSerializer)
     def get(self, request: Request) -> Response:
-        product_serializer = ProductSerializer(Product.objects.all(), many=True)
+        category_serializer = CategorySerializer(Category.objects.all(), many=True)
         ingredients_serializer = IngredientSerializer(
             Ingredient.objects.all(), many=True
         )
 
         return Response(
             {
-                "products": product_serializer.data,
+                "category": category_serializer.data,
                 "ingredients": ingredients_serializer.data,
             },
             status=HTTP_200_OK,

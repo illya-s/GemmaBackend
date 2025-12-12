@@ -45,7 +45,7 @@ class Ingredient(models.Model):
 class DoughType(models.Model):
     name = models.CharField("name", null=False, blank=True, db_index=True)
     value = models.PositiveIntegerField(null=False, blank=True)
-    order = models.PositiveIntegerField(null=False, blank=True)
+    order = models.PositiveIntegerField(default=1, null=False, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,6 +54,7 @@ class DoughType(models.Model):
 class ProductSize(models.Model):
     name = models.CharField("name", null=False, blank=True, db_index=True)
     size = models.PositiveIntegerField("size", null=False, blank=True)
+    order = models.PositiveIntegerField(default=1, null=False, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -75,7 +76,11 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to=product_upload_to, null=True, blank=False)
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, blank=False
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        related_name="products",
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -87,8 +92,6 @@ class Cart(models.Model):
     # token = models.CharField(max_length=16, null=False, blank=True)
 
     total = models.PositiveIntegerField()
-
-    editable = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

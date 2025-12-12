@@ -3,16 +3,18 @@ from rest_framework import serializers
 from .models import Cart, Category, DoughType, Ingredient, Product, ProductSize
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = Product
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True, read_only=True)
+
     class Meta:
-        model = Product
+        model = Category
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
 
@@ -45,7 +47,6 @@ class CartSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "updated_at", "created_at")
 
 
-
 class HomeResponseSerializer(serializers.Serializer):
-    products = ProductSerializer(many=True)
+    categories = CategorySerializer(many=True)
     ingredients = IngredientSerializer(many=True)

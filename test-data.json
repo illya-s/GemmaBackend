@@ -85,5 +85,155 @@
             "price": 2,
             "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/ingredients/Polpette.webp"
         }
+    ],
+    "product_sizes": [
+        { "name": "Piccola", "value": 20, "sortOrder": 1 },
+        { "name": "Media", "value": 30, "sortOrder": 2 },
+        { "name": "Grande", "value": 40, "sortOrder": 3 },
+        { "name": "0.33L", "value": 33, "sortOrder": 4 },
+        { "name": "0.5L", "value": 50, "sortOrder": 5 },
+        { "name": "1L", "value": 100, "sortOrder": 6 },
+        { "name": "Null", "value": 0, "sortOrder": 7 }
+    ],
+    "dough_types": [
+        { "name": "Tradizionale", "value": 1, "sortOrder": 1 },
+        { "name": "Sottile", "value": 2, "sortOrder": 2 },
+        { "name": "Null", "value": 3, "sortOrder": 3 },
+        { "name": "Standart", "value": 4, "sortOrder": 4 }
+    ],
+    "categories": [
+        {
+            "name": "Pizze",
+            "products": [
+                {
+                    "name": "Pepperoni fresh",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Pepperoni_freshJPG.webp"
+                },
+                {
+                    "name": "4 Formaggio",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/4_Formaggio.webp"
+                },
+                {
+                    "name": "Chorizo fresh",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Chorizo%20__fresh.webp"
+                },
+                {
+                    "name": "Margherita",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Margherita.webp"
+                },
+                {
+                    "name": "Barbecue",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Barbecue.webp"
+                },
+                {
+                    "name": "Hawaiano",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Hawaiano.webp"
+                },
+                {
+                    "name": "Prosciutto e funghi",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Pepperoni_freshJPG.webp"
+                },
+                {
+                    "name": "4 Carne",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/4_Carne.webp"
+                },
+                {
+                    "name": "6 Formaggi",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/6_Formaggi.webp"
+                },
+                {
+                    "name": "Villaggio",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Villaggio.webp"
+                }
+            ]
+        },
+        {
+            "name": "Colazione",
+            "products": [
+                {
+                    "name": "Frittata con prosciutto e funghi",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frittata_con_proscitto_e_funghi.webp"
+                },
+                {
+                    "name": "Frittata al salame piccante",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frittata_al_salame_piccante.webp"
+                },
+                {
+                    "name": "Caffè Latte",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-latte.webp"
+                }
+            ]
+        },
+        {
+            "name": "Antipasti",
+            "products": [
+                {
+                    "name": "Prosciutto e formaggio di Danwich",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Prosciutto_e_formaggio_di_Danwich.webp"
+                },
+                {
+                    "name": "Bocconcini di pollo",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Bocconcini_di_pollo.webp"
+                },
+                {
+                    "name": "Patate al forno con salsa 🌱",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Patate_al_forno_con_salsa.webp"
+                },
+                {
+                    "name": "Dodster",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Dodster.webp"
+                },
+                {
+                    "name": "Sharp Dodster 🌶️🌶️",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Sharp_Dodster.webp"
+                }
+            ]
+        },
+        {
+            "name": "Cocktail",
+            "products": [
+                {
+                    "name": "Frullato di banana",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_banana.webp"
+                },
+                {
+                    "name": "Frullato di mele caramellate",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_mele_caramellate.webp"
+                },
+                {
+                    "name": "Frullato di biscotti Oreo",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_biscotti_Oreo.webp"
+                },
+                {
+                    "name": "Frullato classico 👶",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_classico.webp"
+                }
+            ]
+        },
+        {
+            "name": "Bevande",
+            "products": [
+                {
+                    "name": "Cappuccino irlandese",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Cappuccino_irlandese.webp"
+                },
+                {
+                    "name": "Caffè al cappuccino al caramello",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-al-cappuccino-al-caramello.webp"
+                },
+                {
+                    "name": "Caffè Latte al Cocco",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-al-cappuccino-al-caramello.webp"
+                },
+                {
+                    "name": "Caffè americano",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-amer.webp"
+                },
+                {
+                    "name": "Caffè Latte2",
+                    "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Caffe_Latte2.webp"
+                }
+            ]
+        }
     ]
 }

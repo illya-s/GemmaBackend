@@ -9,20 +9,21 @@ class ProductSizeSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
 
+
 class ProductSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     ingredients = serializers.SerializerMethodField()
     dough_types = serializers.SerializerMethodField()
 
-    def get_image(self, obj):
+    def get_image(self, obj) -> str | None:
         request = self.context.get("request")
         return request.build_absolute_uri(obj.image.url) if obj.image else None
 
-    def get_ingredients(self, obj):
+    def get_ingredients(self, obj) -> list[str]:
         return [str(pi.ingredient.name) for pi in obj.product_ingredient.all()]
 
-    def get_dough_types(self, obj):
-        return [dt.name for dt in obj.dough_types.all()]
+    def get_dough_types(self, obj) -> list[str]:
+        return [str(dt.name) for dt in obj.dough_types.all()]
 
     class Meta:
         model = Product
@@ -35,10 +36,9 @@ class CategorySerializer(serializers.ModelSerializer):
     product_sizes = serializers.SerializerMethodField()
     # ProductSizeSerializer(many=True, read_only=True)
 
-    def get_product_sizes(self, obj):
+    def get_product_sizes(self, obj) -> list[str]:
         serializer = ProductSizeSerializer(
-            [cp.product_size for cp in obj.category_product_size.all()],
-            many=True
+            [cp.product_size for cp in obj.category_product_size.all()], many=True
         )
         return serializer.data
 
@@ -51,7 +51,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
-    def get_image(self, obj):
+    def get_image(self, obj) -> str | None:
         request = self.context.get("request")
         return request.build_absolute_uri(obj.image.url) if obj.image else None
 

@@ -104,133 +104,165 @@
     "categories": [
         {
             "name": "Pizze",
+            "product_sizes": ["Piccola", "Media", "Grande"],
             "products": [
                 {
                     "name": "Pepperoni fresh",
+                    "price": 9.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Pepperoni_freshJPG.webp"
                 },
                 {
                     "name": "4 Formaggio",
+                    "price": 10,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/4_Formaggio.webp"
                 },
                 {
                     "name": "Chorizo fresh",
+                    "price": 10.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Chorizo%20__fresh.webp"
                 },
                 {
                     "name": "Margherita",
+                    "price": 8.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Margherita.webp"
                 },
                 {
                     "name": "Barbecue",
+                    "price": 10.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Barbecue.webp"
                 },
                 {
                     "name": "Hawaiano",
+                    "price": 9.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Hawaiano.webp"
                 },
                 {
                     "name": "Prosciutto e funghi",
+                    "price": 9.8,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Pepperoni_freshJPG.webp"
                 },
                 {
                     "name": "4 Carne",
+                    "price": 11,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/4_Carne.webp"
                 },
                 {
                     "name": "6 Formaggi",
+                    "price": 11.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/6_Formaggi.webp"
                 },
                 {
                     "name": "Villaggio",
+                    "price": 10.8,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/pizza/Villaggio.webp"
                 }
             ]
         },
         {
             "name": "Colazione",
+            "product_sizes": ["Piccola", "Media", "Grande"],
             "products": [
                 {
                     "name": "Frittata con prosciutto e funghi",
+                    "price": 6.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frittata_con_proscitto_e_funghi.webp"
                 },
                 {
                     "name": "Frittata al salame piccante",
+                    "price": 6.8,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frittata_al_salame_piccante.webp"
                 },
                 {
                     "name": "Caffè Latte",
+                    "price": 3.2,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-latte.webp"
                 }
             ]
         },
         {
             "name": "Antipasti",
+            "product_sizes": ["Piccola", "Media", "Grande"],
             "products": [
                 {
                     "name": "Prosciutto e formaggio di Danwich",
+                    "price": 7.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Prosciutto_e_formaggio_di_Danwich.webp"
                 },
                 {
                     "name": "Bocconcini di pollo",
+                    "price": 6.9,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Bocconcini_di_pollo.webp"
                 },
                 {
                     "name": "Patate al forno con salsa 🌱",
+                    "price": 4.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Patate_al_forno_con_salsa.webp"
                 },
                 {
                     "name": "Dodster",
+                    "price": 5.2,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Dodster.webp"
                 },
                 {
                     "name": "Sharp Dodster 🌶️🌶️",
+                    "price": 5.6,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Sharp_Dodster.webp"
                 }
             ]
         },
         {
             "name": "Cocktail",
+            "product_sizes": ["0.33L", "0.5L", "1L"],
             "products": [
                 {
                     "name": "Frullato di banana",
+                    "price": 4.8,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_banana.webp"
                 },
                 {
                     "name": "Frullato di mele caramellate",
+                    "price": 5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_mele_caramellate.webp"
                 },
                 {
                     "name": "Frullato di biscotti Oreo",
+                    "price": 5.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_di_biscotti_Oreo.webp"
                 },
                 {
                     "name": "Frullato classico 👶",
+                    "price": 4.2,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Frullato_classico.webp"
                 }
             ]
         },
         {
             "name": "Bevande",
+            "product_sizes": ["0.33L", "0.5L", "1L"],
             "products": [
                 {
                     "name": "Cappuccino irlandese",
+                    "price": 3.8,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Cappuccino_irlandese.webp"
                 },
                 {
                     "name": "Caffè al cappuccino al caramello",
+                    "price": 3.9,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-al-cappuccino-al-caramello.webp"
                 },
                 {
                     "name": "Caffè Latte al Cocco",
+                    "price": 4,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-al-cappuccino-al-caramello.webp"
                 },
                 {
                     "name": "Caffè americano",
+                    "price": 2.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/caffe-amer.webp"
                 },
                 {
                     "name": "Caffè Latte2",
+                    "price": 3.5,
                     "imageUrl": "https://twjhdhfkcwoapajrkakp.supabase.co/storage/v1/object/public/gemma/products/Caffe_Latte2.webp"
                 }
             ]

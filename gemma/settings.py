@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "corsheaders",
-    "phonenumber_field",
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "shop",
-    "user",
+    "user.apps.UserConfig",
 ]
 
 MIDDLEWARE = [

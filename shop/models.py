@@ -11,16 +11,6 @@ from user.models import User
 
 
 # Create your models here.
-class Category(models.Model):
-    name = models.CharField("name", null=False, blank=True, db_index=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return str(self.name)
-
-
 def ingredient_upload_to(instance, filename):
     fn, ext = os.path.splitext(filename)
     return "/".join(
@@ -60,6 +50,24 @@ class ProductSize(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class Category(models.Model):
+    name = models.CharField("name", null=False, blank=True, db_index=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class CategoryProductSize(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_product_size")
+    product_size = models.ForeignKey(ProductSize, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.category.name} - {self.product_size.name}"
+
+
 def product_upload_to(instance, filename):
     fn, ext = os.path.splitext(filename)
     return "/".join(
@@ -73,6 +81,7 @@ def product_upload_to(instance, filename):
 
 class Product(models.Model):
     name = models.CharField("name", null=False, blank=True, db_index=True)
+    price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
 
     image = models.ImageField(upload_to=product_upload_to, null=True, blank=False)
     category = models.ForeignKey(
@@ -83,8 +92,22 @@ class Product(models.Model):
         related_name="products",
     )
 
+    dough_types = models.ManyToManyField(DoughType)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class ProductIngredient(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="product_ingredient", null=False
+    )
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, null=False)
+
+    is_default = models.BooleanField(default=False)
 
 
 class Cart(models.Model):

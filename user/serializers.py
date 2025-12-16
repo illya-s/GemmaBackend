@@ -7,7 +7,7 @@ import datetime
 from django.utils import timezone
 from rest_framework import serializers
 
-from .models import User, AccessToken, RefreshToken, LoginCode
+from .models import User, AccessToken, RefreshToken, VerificationCode
 
 
 class RequestCodeSerializer(serializers.Serializer):
@@ -19,14 +19,14 @@ class RequestCodeSerializer(serializers.Serializer):
         email = validated_data["email"]
         now = timezone.now()
 
-        recent_count = LoginCode.objects.filter(
+        recent_count = VerificationCode.objects.filter(
             email=email, created_at__gte=now - datetime.timedelta(minutes=1)
         ).count()
 
         if recent_count >= 10:
             raise serializers.ValidationError("Too many requests. Try again later.")
 
-        login_code = LoginCode.create_with_code(email=email)
+        login_code = VerificationCode.create_with_code(email=email)
         return {"email": email, "code": login_code.code}
 
     def update(self, instance, validated_data):
@@ -46,7 +46,7 @@ class EnterCodeSerializer(serializers.Serializer):
             raise serializers.ValidationError("Требуется адрес электронной почты и код")
 
         record = (
-            LoginCode.objects.filter(email=email, is_used=False)
+            VerificationCode.objects.filter(email=email, is_used=False)
             .order_by("-created_at")
             .first()
         )

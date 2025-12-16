@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from .models import Cart, Category, DoughType, Ingredient, Product, ProductSize
@@ -34,11 +35,13 @@ class ProductSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
     product_sizes = serializers.SerializerMethodField()
-    # ProductSizeSerializer(many=True, read_only=True)
+    # product_sizes = ProductSizeSerializer(many=True, read_only=True)
 
-    def get_product_sizes(self, obj) -> list[str]:
+    @extend_schema_field(ProductSizeSerializer(many=True))
+    def get_product_sizes(self, obj):
         serializer = ProductSizeSerializer(
-            [cp.product_size for cp in obj.category_product_size.all()], many=True
+            [cp.product_size for cp in obj.category_product_size.all()],
+            many=True,
         )
         return serializer.data
 

@@ -1,4 +1,4 @@
-from drf_spectacular.types import OpenApiTypes
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
@@ -8,6 +8,26 @@ from .models import Cart, Category, DoughType, Ingredient, Product, ProductSize
 class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSize
+        fields = "__all__"
+        read_only_fields = ("id", "updated_at", "created_at")
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj) -> str | None:
+        request = self.context.get("request")
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
+
+    class Meta:
+        model = Ingredient
+        fields = "__all__"
+        read_only_fields = ("id", "updated_at", "created_at")
+
+
+class DoughTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoughType
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
 
@@ -23,12 +43,11 @@ class ProductSerializer(serializers.ModelSerializer):
             return obj.image.url
         return request.build_absolute_uri(obj.image.url) if obj.image else None
 
-    @extend_schema_field(OpenApiTypes.STR)
+    @extend_schema_field(IngredientSerializer(many=True))
     def get_ingredients(self, obj):
         if self.context.get("minimal"):
             return [pi.ingredient.name for pi in obj.product_ingredient.all()]
-
-        ingredient_serializer = IngredientSerializer(
+        serializer = IngredientSerializer(
             [pi.ingredient for pi in obj.product_ingredient.all()],
             many=True,
             context={
@@ -36,9 +55,9 @@ class ProductSerializer(serializers.ModelSerializer):
                 "minimal": True,
             },
         )
-        return ingredient_serializer.data
+        return serializer.data
 
-    @extend_schema_field(OpenApiTypes.STR)
+    @extend_schema_field(DoughTypeSerializer(many=True))
     def get_dough_types(self, obj):
         if self.context.get("minimal"):
             return [str(dt.name) for dt in obj.dough_types.all()]
@@ -65,8 +84,41 @@ class CategorySerializer(serializers.ModelSerializer):
 
     @extend_schema_field(ProductSerializer(many=True))
     def get_products(self, obj):
+        request = self.context.get("request")
+
+        filters_list = Q()
+        qs = obj.products.all()
+
+        dough_types = request.query_params.getlist("dough_type")
+        if dough_types:
+            filters_list &= Q(dough_types__in=map(int, dough_types))
+
+        product_sizes = request.query_params.getlist("product_size")
+        if product_sizes:
+            filters_list &= Q(
+                category__category_product_size__product_size_id__in=map(
+                    int, product_sizes
+                )
+            )
+
+        ingredients = request.query_params.getlist("ingredient")
+        if ingredients:
+            filters_list &= Q(
+                product_ingredient__ingredient_id__in=map(int, ingredients)
+            )
+
+        min_price = request.query_params.get("min_price")
+        if min_price:
+            filters_list &= Q(price__gte=min_price)
+
+        max_price = request.query_params.get("max_price")
+        if max_price:
+            filters_list &= Q(price__lte=max_price)
+
+        qs = qs.filter(filters_list)
+
         serializer = ProductSerializer(
-            obj.products.all(),
+            qs.distinct(),
             many=True,
             context={
                 **self.context,
@@ -89,26 +141,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = "__all__"
-        read_only_fields = ("id", "updated_at", "created_at")
-
-
-class IngredientSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-
-    def get_image(self, obj) -> str | None:
-        request = self.context.get("request")
-        return request.build_absolute_uri(obj.image.url) if obj.image else None
-
-    class Meta:
-        model = Ingredient
-        fields = "__all__"
-        read_only_fields = ("id", "updated_at", "created_at")
-
-
-class DoughTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DoughType
         fields = "__all__"
         read_only_fields = ("id", "updated_at", "created_at")
 

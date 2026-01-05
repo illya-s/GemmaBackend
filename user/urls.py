@@ -15,5 +15,5 @@ urlpatterns = [
 
     path("devices/", views.DeviceListView.as_view()),
     path("devices/<int:pk>/", views.DeviceDeleteView.as_view()),
-    path("devices/logout_others/", views.DeviceLogoutOthersView.as_view()),
+    # path("devices/logout_others/", views.DeviceLogoutOthersView.as_view()),
 ]

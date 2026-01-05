@@ -4,78 +4,108 @@
 # pyright: ignore[reportMissingTypeStubs]
 """
 
-import datetime
-
 from django.conf import settings
-from django.utils import timezone
-from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework import permissions, status, views
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from .auth import JWTAuthentication
-from .models import AccessToken, RefreshToken
-from .serializers import (
-    AccessTokenSerializer,
-    EnterCodeSerializer,
-    RequestCodeSerializer,
-)
-from .utils import send_login_code
+from . import serializers
+from .models import User, UserDevice, VerificationCode
+from .utils import decode_jwt, generate_tokens, send_login_code
 
 
-class RequestCodeView(APIView):
-    authentication_classes = []
-    permission_classes = [AllowAny]
-    serializer_class = RequestCodeSerializer
+@extend_schema(tags=["User"])
+class SessionView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.UserSerializer
 
-    def post(self, request: Request) -> Response:
+    def get(self, request):
+        """Получить данные текущего пользователя."""
+        serializer = self.serializer_class(request.user)
+        return Response(serializer.data)
+
+
+@extend_schema(tags=["User"])
+class RequestCodeView(views.APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = serializers.RequestCodeSerializer
+
+    def post(self, request):
+        """Запрос кода верификации (Email/Phone)."""
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        login_code = serializer.save()
 
-        try:
-            send_login_code(email=login_code.get("email"), code=login_code.get("code"))
-            return Response(
-                {"message": "Код отправлен на email"},
-                status=status.HTTP_200_OK,
-            )
-        except Exception as exc:
-            return Response(
-                {"message": str(exc)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
+        target = serializer.validated_data["target"]
+        type = serializer.validated_data["type"]
+
+        vc = VerificationCode.create_with_code(target=target, type=type)
+
+        match type:
+            case "email":
+                send_login_code(email=target, code=vc.code)
+                print(vc.code)
+        return Response({"detail": "Code sent"})
 
 
-class EnterCodeView(APIView):
-    authentication_classes = []
-    permission_classes = [AllowAny]
-    serializer_class = EnterCodeSerializer
+@extend_schema(tags=["User"], responses={200: serializers.TokenResponseSerializer})
+class EnterCodeView(views.APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = serializers.EnterCodeSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
-        result = serializer.save()
-
-        user = result["user"]
+        user, access, refresh = serializer.save()
 
         res = Response(
             {
-                "message": "Вы вошли!",
-                "user": {
-                    "username": user.username,
-                    "email": user.email,
-                    "avatar": user.avatar.url if user.avatar else None,
-                },
-                "access_token": result["access_token"],
-            },
-            status=status.HTTP_200_OK,
+                "access": access,
+                "user": serializers.UserSerializer(
+                    user, context={"request": request}
+                ).data,
+            }
         )
+
         res.set_cookie(
-            key="refresh",
-            value=result["refresh_token"],
+            "refresh",
+            refresh,
+            httponly=settings.SESSION_COOKIE_HTTPONLY,
+            samesite=settings.SESSION_COOKIE_SAMESITE,
+            secure=settings.SESSION_COOKIE_SECURE,
+            domain=settings.SESSION_COOKIE_DOMAIN,
+        )
+
+        return res
+
+
+@extend_schema(tags=["User"], responses={200: serializers.RefreshResponseSerializer})
+class RefreshView(views.APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = serializers.RefreshTokenSerializer
+
+    def post(self, request: Request) -> Response:
+        serializer = self.serializer_class(
+            data={"refresh_token": request.COOKIES.get("refresh")}
+        )
+        serializer.is_valid(raise_exception=True)
+        user, access, refresh = serializer.save()
+
+        res = Response(
+            {
+                "access": access,
+                "user": serializers.UserSerializer(
+                    user, context={"request": request}
+                ).data,
+            }
+        )
+
+        res.set_cookie(
+            "refresh",
+            refresh,
             httponly=settings.SESSION_COOKIE_HTTPONLY,
             samesite=settings.SESSION_COOKIE_SAMESITE,
             secure=settings.SESSION_COOKIE_SECURE,
@@ -84,114 +114,46 @@ class EnterCodeView(APIView):
         return res
 
 
-class SessionView(APIView):
-    permission_classes = [IsAuthenticated]
+@extend_schema(tags=["User"])
+class DeviceListView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.UserDeviceSerializer
 
-    def get(self, request: Request):
-        user = request.user
+    def get(self, request):
+        """Список активных устройств пользователя."""
+        devices = UserDevice.objects.filter(user=request.user, is_active=True)
+        serializer = self.serializer_class(devices, many=True)
+        return Response(serializer.data)
+
+
+@extend_schema(tags=["User"])
+class DeviceDeleteView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.UserDeviceSerializer
+
+    def delete(self, request: Request, pk) -> Response:
+        """Деактивация (разлогин) конкретного устройства."""
+        device = get_object_or_404(UserDevice, pk=pk, user=request.user, is_active=True)
+        device.is_active = False
+        device.save(update_fields=["is_active"])
         return Response(
-            {
-                "id": user.pk,
-                "uid": user.uid,
-                "username": user.username,
-                "email": user.email,
-                "avatar": user.avatar.url if user.avatar else None,
-            },
-            status=status.HTTP_200_OK,
+            {"detail": "Device deactivated"}, status=status.HTTP_204_NO_CONTENT
         )
 
 
-class RefreshView(APIView):
-    """
-    POST /auth/refresh/
-    {
-        "refresh": "<refresh_token>"
-    }
-    """
+# @extend_schema(tags=["User"])
+# class DeviceLogoutOthersView(views.APIView):
+#     permission_classes = [permissions.IsAuthenticated]
 
-    authentication_classes = [JWTAuthentication]
+#     def post(self, request: Request) -> Response:
 
-    def post(self, request: Request):
-        refresh_token_str = request.COOKIES.get("refresh")
+#         current_device_id = (
+#             request.auth.get("device_id") if isinstance(request.auth, dict) else None
+#         )
 
-        if not refresh_token_str:
-            return Response({"detail": "Missing refresh token"}, status=400)
+#         qs = UserDevice.objects.filter(user=request.user)
+#         if current_device_id:
+#             qs = qs.exclude(device_id=current_device_id)
 
-        try:
-            payload = JWTAuthentication()._decode_token(refresh_token_str)
-            if payload.get("type") != "refresh":
-                return Response({"detail": "Invalid token type"}, status=400)
-
-            refresh_token = RefreshToken.objects.get(
-                id=payload.get("id"), user_id=payload.get("user_id")
-            )
-        except RefreshToken.DoesNotExist:
-            return Response({"detail": "Invalid token"}, status=401)
-
-        if not refresh_token.is_valid():
-            return Response({"detail": "Refresh token expired"}, status=401)
-
-        new_access = AccessToken.objects.create(
-            user=refresh_token.user,
-            expires_at=timezone.now() + datetime.timedelta(hours=1),
-            device_id=refresh_token.device_id,
-            user_agent=refresh_token.user_agent,
-            ip_address=refresh_token.ip_address,
-        )
-
-        return Response(
-            {"access_token": new_access.token},
-            status=status.HTTP_200_OK,
-        )
-
-
-class DeviceListView(APIView):
-    """Get a list of active devices"""
-
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request: Request):
-        tokens = AccessToken.objects.filter(
-            user=request.user, expires_at__gt=timezone.now()
-        )
-        serializer = AccessTokenSerializer(tokens, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class DeviceDeleteView(APIView):
-    """Logout a specific device"""
-
-    permission_classes = [IsAuthenticated]
-
-    def delete(self, request: Request, pk):
-        try:
-            token = AccessToken.objects.get(pk=pk, user=request.user)
-            token.delete()
-            return Response(
-                {"detail": "Device logged out successfully"}, status=status.HTTP_200_OK
-            )
-        except AccessToken.DoesNotExist:
-            return Response(
-                {"detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-
-class DeviceLogoutOthersView(APIView):
-    """Log out all devices except the current one"""
-
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request: Request):
-        current_device_id = request.data.get("device_id")
-        if not current_device_id:
-            return Response(
-                {"detail": "device_id required"}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        AccessToken.objects.filter(user=request.user).exclude(
-            device_id=current_device_id
-        ).delete()
-
-        return Response(
-            {"detail": "All other devices logged out"}, status=status.HTTP_200_OK
-        )
+#         qs.update(is_active=False)
+#         return Response({"detail": "Other sessions closed"})

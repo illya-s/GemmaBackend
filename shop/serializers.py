@@ -115,7 +115,8 @@ class CategorySerializer(serializers.ModelSerializer):
         if max_price:
             filters_list &= Q(price__lte=max_price)
 
-        qs = qs.filter(filters_list)
+        if filters_list:
+            qs = qs.filter(filters_list)
 
         serializer = ProductSerializer(
             qs.distinct(),

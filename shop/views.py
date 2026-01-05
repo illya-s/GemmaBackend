@@ -22,6 +22,7 @@ from .serializers import (
 
 @extend_schema(
     responses=HomeResponseSerializer,
+    tags=["Shop"],
     parameters=[
         OpenApiParameter(
             name="dough_type",
@@ -92,7 +93,7 @@ class HomeView(APIView):
         )
 
 
-@extend_schema(responses=ProductSerializer)
+@extend_schema(responses=ProductSerializer, tags=["Shop"])
 class ProductsView(APIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
@@ -103,14 +104,8 @@ class ProductsView(APIView):
         )
         return Response(serializer.data, status=HTTP_200_OK)
 
-    def post(self, request: Request) -> Response:
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
 
-
-@extend_schema(responses=ProductSerializer)
+@extend_schema(responses=ProductSerializer, tags=["Shop"])
 class ProductView(APIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
@@ -120,14 +115,14 @@ class ProductView(APIView):
         serializer = self.serializer_class(product, context={"request": request})
         return Response(serializer.data, status=HTTP_200_OK)
 
-    # def post(self, request: Request) -> Response:
-    #     serializer = self.serializer_class(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response(serializer.data)
+    def post(self, request: Request) -> Response:
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
-@extend_schema(responses=IngredientSerializer)
+@extend_schema(responses=IngredientSerializer, tags=["Shop"])
 class IngredientsView(APIView):
     serializer_class = IngredientSerializer
     permission_classes = [AllowAny]
